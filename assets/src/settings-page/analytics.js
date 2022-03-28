@@ -213,13 +213,11 @@ export function Analytics() {
 					{
 						createInterpolateElement(
 							sprintf(
-								/* translators: 1: amp-analytics, 2: {, 3: }, 4: amp-analytics tag, 5: script tag, 6: googleanalytics. */
-								__( 'Please see AMP project\'s <AnalyticsDocsUrl>documentation</AnalyticsDocsUrl> for %1$s as well as the <PluginAnalyticsDocsUrl>plugin\'s analytics documentation</PluginAnalyticsDocsUrl>. Each analytics configuration supplied below must take the form of a JSON object beginning with a %2$s and ending with a %3$s. Do not include any HTML tags like %4$s or %5$s. For the type field, supply one of the <VendorDocsUrl>available analytics vendors</VendorDocsUrl> or leave it blank for in-house analytics. For Google Analytics specifically, the type should be %6$s.', 'amp' ),
+								/* translators: 1: amp-analytics, 2: {, 3: }, 4: googleanalytics. */
+								__( 'Please see AMP project\'s <AnalyticsDocsUrl>documentation</AnalyticsDocsUrl> for %1$s as well as the <PluginAnalyticsDocsUrl>plugin\'s analytics documentation</PluginAnalyticsDocsUrl>. Each analytics configuration supplied below must take the form of a JSON object beginning with a %2$s and ending with a %3$s. Do not include any HTML tags like <AmpAnalyticsTag/> or <ScriptTag/>. For the type field, supply one of the <VendorDocsUrl>available analytics vendors</VendorDocsUrl> or leave it blank for in-house analytics. For Google Analytics specifically, the type should be %4$s.', 'amp' ),
 								'<code>amp-analytics</code>',
 								'<code>{</code>',
 								'<code>}</code>',
-								'<code>&lt;amp-analytics&gt;</code>',
-								'<code>&lt;script&gt;</code>',
 								`<code>${ GOOGLE_ANALYTICS_VENDOR }</code>`,
 							),
 							{
@@ -229,6 +227,16 @@ export function Analytics() {
 								VendorDocsUrl: <a href="https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/configure-analytics/analytics-vendors/" target="_blank" rel="noreferrer" />,
 								/* eslint-enable jsx-a11y/anchor-has-content */
 								code: <code />,
+								AmpAnalyticsTag: (
+									<code>
+										{ '<amp-analytics>' }
+									</code>
+								),
+								ScriptTag: (
+									<code>
+										{ '<script>' }
+									</code>
+								),
 							},
 						)
 					}
