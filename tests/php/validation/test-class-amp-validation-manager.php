@@ -2016,6 +2016,13 @@ class Test_AMP_Validation_Manager extends DependencyInjectedTestCase {
 			]
 		);
 
+		// In PHP 8.4, a closure's string representation changes from {closure} to {closure:Test_AMP_Validation_Manager::test_decorate_shortcode_and_filter_source():1831}. So this is normalized here.
+		$filtered_content = preg_replace(
+			'/{closure:[^}]+}/',
+			'{closure}',
+			$filtered_content
+		);
+
 		$this->assertEquals(
 			preg_split( '/(?=<)/', $expected_content ),
 			preg_split( '/(?=<)/', $filtered_content )
