@@ -466,58 +466,6 @@ const settingsPage = {
 	],
 };
 
-const supportPage = {
-	...sharedConfig,
-	entry: {
-		'wp-api-fetch': './assets/src/polyfills/api-fetch.js',
-		'amp-support': './assets/src/support-page',
-	},
-	externals: {
-		'amp-support': 'ampSupport',
-	},
-	resolve: {
-		alias: {
-			'@wordpress/api-fetch__non-shim': require.resolve(
-				'@wordpress/api-fetch'
-			),
-		},
-	},
-	plugins: [
-		...sharedConfig.plugins.filter(
-			(plugin) =>
-				plugin.constructor.name !== 'DependencyExtractionWebpackPlugin'
-		),
-		new DependencyExtractionWebpackPlugin({
-			useDefaults: false,
-			// Most dependencies will be bundled for the AMP setup screen for compatibility across WP versions.
-			requestToHandle: (handle) => {
-				switch (handle) {
-					case 'lodash':
-					case '@wordpress/api-fetch':
-						return defaultRequestToHandle(handle);
-
-					default:
-						return undefined;
-				}
-			},
-			requestToExternal: (external) => {
-				switch (external) {
-					case 'lodash':
-					case '@wordpress/api-fetch':
-						return defaultRequestToExternal(external);
-
-					default:
-						return undefined;
-				}
-			},
-		}),
-		new WebpackBar({
-			name: 'Support Page',
-			color: '#67b255',
-		}),
-	],
-};
-
 const styles = {
 	...sharedConfig,
 	entry: () => {
@@ -599,7 +547,6 @@ module.exports = [
 	wpDomReadyPackage,
 	onboardingWizard,
 	settingsPage,
-	supportPage,
 	styles,
 	mobileRedirection,
 ];
