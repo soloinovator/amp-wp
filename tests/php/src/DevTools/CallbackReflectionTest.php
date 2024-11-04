@@ -244,12 +244,7 @@ class CallbackReflectionTest extends DependencyInjectedTestCase {
 		$this->assertTrue( is_int( $source['line'] ) );
 		$this->assertEquals(
 			$source_function,
-			// In PHP 8.4, a closure's string representation changes from {closure} to {closure:Test_AMP_Validation_Manager::test_decorate_shortcode_and_filter_source():1831}. So this is normalized here.
-			preg_replace(
-				'/{closure:[^}]+}/',
-				'{closure}',
-				$source['function']
-			)
+			$this->normalize_closure_function_name( $source['function'] )
 		);
 		/** @var ReflectionFunction $reflection */
 		$reflection = $source['reflection'];

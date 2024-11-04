@@ -71,4 +71,27 @@ abstract class TestCase extends PolyfilledTestCase {
 			$this->assertContains( $expected_value, $actual_superset );
 		}
 	}
+
+	/**
+	 * Normalizes closure function name in supplied data.
+	 *
+	 * In PHP 8.4, a closure's string representation changes from {closure} to {closure:Test_AMP_Validation_Manager::test_decorate_shortcode_and_filter_source():1831}. So this is normalized here.
+	 *
+	 * @param mixed $data Data.
+	 * @return mixed Data.
+	 */
+	public function normalize_closure_function_name( $data ) {
+		if ( is_string( $data ) ) {
+			$data = preg_replace(
+				'/(\w+\\\\)*{closure:[^}]+}/',
+				'{closure}',
+				$data
+			);
+		} elseif ( is_array( $data ) ) {
+			foreach ( $data as $key => $value ) {
+				$data[ $key ] = $this->normalize_closure_function_name( $value );
+			}
+		}
+		return $data;
+	}
 }
