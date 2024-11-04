@@ -905,7 +905,7 @@ class Test_AMP_Validation_Manager extends DependencyInjectedTestCase {
 							'dependency_type' => 'style',
 							'handle'          => 'foo',
 						],
-						$this->normalize_closure_function_name( $sources[0] )
+						$sources[0]
 					);
 				},
 			],
@@ -937,7 +937,7 @@ class Test_AMP_Validation_Manager extends DependencyInjectedTestCase {
 							'handle'            => 'bar',
 							'dependency_handle' => 'wp-codemirror',
 						],
-						$this->normalize_closure_function_name( $sources[0] )
+						$sources[0]
 					);
 				},
 			],
@@ -971,7 +971,7 @@ class Test_AMP_Validation_Manager extends DependencyInjectedTestCase {
 							'text'            => '/*Hello Baz!*/',
 							'handle'          => 'baz',
 						],
-						$this->normalize_closure_function_name( $sources[1] )
+						$sources[1]
 					);
 				},
 			],
@@ -1003,7 +1003,7 @@ class Test_AMP_Validation_Manager extends DependencyInjectedTestCase {
 							'dependency_type' => 'script',
 							'handle'          => 'foo',
 						],
-						$this->normalize_closure_function_name( $sources[0] )
+						$sources[0]
 					);
 				},
 			],
@@ -1036,7 +1036,7 @@ class Test_AMP_Validation_Manager extends DependencyInjectedTestCase {
 							'handle'            => 'bar',
 							'dependency_handle' => 'wp-codemirror',
 						],
-						$this->normalize_closure_function_name( $sources[0] )
+						$sources[0]
 					);
 				},
 			],
@@ -1071,7 +1071,7 @@ class Test_AMP_Validation_Manager extends DependencyInjectedTestCase {
 							'text'            => 'var Baz = {"greeting":"Hello Baz!"};',
 							'handle'          => 'baz',
 						],
-						$this->normalize_closure_function_name( $sources[2] )
+						$sources[2]
 					);
 				},
 			],
@@ -1119,7 +1119,7 @@ class Test_AMP_Validation_Manager extends DependencyInjectedTestCase {
 							'text'            => '/*Hello after Bar!*/',
 							'handle'          => 'bar',
 						],
-						$this->normalize_closure_function_name( $sources_sets[0][2] )
+						$sources_sets[0][2]
 					);
 					$this->assertAssocArrayContains(
 						[
@@ -1133,7 +1133,7 @@ class Test_AMP_Validation_Manager extends DependencyInjectedTestCase {
 							'text'            => '/*Hello before Baz!*/',
 							'handle'          => 'baz',
 						],
-						$this->normalize_closure_function_name( $sources_sets[1][2] )
+						$sources_sets[1][2]
 					);
 				},
 			],
@@ -1168,7 +1168,7 @@ class Test_AMP_Validation_Manager extends DependencyInjectedTestCase {
 							'text'            => '/*Hello after Baz!*/',
 							'handle'          => 'baz',
 						],
-						$this->normalize_closure_function_name( $sources[2] )
+						$sources[2]
 					);
 				},
 			],
@@ -1205,7 +1205,7 @@ class Test_AMP_Validation_Manager extends DependencyInjectedTestCase {
 							'dependency_type' => 'style',
 							'handle'          => 'foo',
 						],
-						$this->normalize_closure_function_name( $sources[0] )
+						$sources[0]
 					);
 				},
 			],
@@ -1753,7 +1753,7 @@ class Test_AMP_Validation_Manager extends DependencyInjectedTestCase {
 					sprintf( '<!--/amp-source-stack {"type":"plugin","name":"amp","file":"tests\/php\/validation\/test-class-amp-validation-manager.php","line":%d,"function":"{closure}","hook":"outer_action","priority":10}-->', $outer_reflection->getStartLine() ),
 				]
 			),
-			$this->normalize_closure_function_name( $output )
+			$output
 		);
 	}
 
@@ -2018,7 +2018,7 @@ class Test_AMP_Validation_Manager extends DependencyInjectedTestCase {
 
 		$this->assertEquals(
 			preg_split( '/(?=<)/', $expected_content ),
-			preg_split( '/(?=<)/', $this->normalize_closure_function_name( $filtered_content ) )
+			preg_split( '/(?=<)/', $filtered_content )
 		);
 	}
 

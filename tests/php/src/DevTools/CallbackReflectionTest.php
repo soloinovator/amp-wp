@@ -242,10 +242,7 @@ class CallbackReflectionTest extends DependencyInjectedTestCase {
 		$this->assertEquals( $name, $source['name'] );
 		$this->assertEquals( $file, $source['file'] );
 		$this->assertTrue( is_int( $source['line'] ) );
-		$this->assertEquals(
-			$source_function,
-			$this->normalize_closure_function_name( $source['function'] )
-		);
+		$this->assertEquals( $source_function, $source['function'] );
 		/** @var ReflectionFunction $reflection */
 		$reflection = $source['reflection'];
 		$this->assertInstanceOf( $reflection_class, $reflection );

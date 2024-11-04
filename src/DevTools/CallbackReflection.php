@@ -110,7 +110,17 @@ final class CallbackReflection implements Service {
 		if ( $reflection instanceof ReflectionMethod ) {
 			$source['function'] = $reflection->getDeclaringClass()->getName() . '::' . $reflection->getName();
 		} else {
-			$source['function'] = $reflection->getName();
+			/*
+			 * In PHP 8.4, a closure's string representation changes from {closure} to include the function that contained
+			 * the closure, like {closure:Test_AMP_Validation_Manager::test_decorate_shortcode_and_filter_source():1831}.
+			 * It can even indicate closure nesting like {closure:{closure:Test_AMP_Validation_Manager::get_locate_sources_data():883}:886}.
+			 * So these are normalized here.
+			 */
+			$source['function'] = preg_replace(
+				'/\{closure.*}/',
+				'{closure}',
+				$reflection->getName()
+			);
 		}
 
 		return $source;
