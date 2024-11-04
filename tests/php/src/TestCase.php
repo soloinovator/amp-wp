@@ -83,7 +83,7 @@ abstract class TestCase extends PolyfilledTestCase {
 	public function normalize_closure_function_name( $data ) {
 		if ( is_string( $data ) ) {
 			$data = preg_replace(
-				'/(\w+\\\\)*{closure:[^}]+}/',
+				'/\{closure:[^}]+}/',
 				'{closure}',
 				$data
 			);
