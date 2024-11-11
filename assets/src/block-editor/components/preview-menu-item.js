@@ -216,6 +216,10 @@ class AmpPreviewMenuItem extends Component {
 		// just link to the post's URL.
 		const href = previewLink || currentPostLink;
 
+		if (typeof PluginPreviewMenuItem !== 'function') {
+			return null;
+		}
+
 		return (
 			isEnabled &&
 			!errorMessages.length &&
