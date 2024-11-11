@@ -199,7 +199,7 @@ export function AMPSupport(props) {
 						size={NOTICE_SIZE_SMALL}
 						className={'amp-notice--uuid'}
 					>
-						{__('Support UUID: ', 'amp')}
+						{__('Support UUID:', 'amp')}
 						<code>{uuid}</code>
 						<ClipboardButton
 							isSmall={true}
