@@ -5,7 +5,7 @@ exports[`DevToolsToggle matches snapshot 1`] = `
   className="amp-setting-toggle"
 >
   <div
-    className="components-base-control components-toggle-control css-1wgfkcs-Wrapper-boxSizingReset-classes ej5x27r4"
+    className="components-base-control components-toggle-control css-ij2po-Wrapper-boxSizingReset ej5x27r4"
   >
     <div
       className="components-base-control__field css-yj91it-StyledField ej5x27r3"
