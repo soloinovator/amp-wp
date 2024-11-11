@@ -16,7 +16,9 @@ module.exports = {
 		'<rootDir>/assets/src/block-editor/plugins',
 		'<rootDir>/assets/src/block-validation/plugins',
 	],
-	transformIgnorePatterns: ['node_modules/(?!lib0|nanoid|client-zip)'],
+	transformIgnorePatterns: [
+		'node_modules/(?!lib0|nanoid|client-zip|parsel-js)',
+	],
 	coveragePathIgnorePatterns: [
 		'<rootDir>/node_modules',
 		'<rootDir>/build/',

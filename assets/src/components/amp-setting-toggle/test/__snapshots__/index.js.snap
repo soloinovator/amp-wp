@@ -5,13 +5,13 @@ exports[`AMPSettingToggle matches snapshots 1`] = `
   className="amp-setting-toggle"
 >
   <div
-    className="components-base-control components-toggle-control css-1wgfkcs-Wrapper-boxSizingReset-classes ej5x27r4"
+    className="components-base-control components-toggle-control css-ij2po-Wrapper-boxSizingReset ej5x27r4"
   >
     <div
       className="components-base-control__field css-yj91it-StyledField ej5x27r3"
     >
       <div
-        className="components-flex components-h-stack css-1tus1dj-PolymorphicDiv-Flex-base-ItemsRow e19lxcc00"
+        className="components-flex components-h-stack css-x0iqvu-PolymorphicDiv-Flex-base-ItemsRow e19lxcc00"
         data-wp-c16t={true}
         data-wp-component="HStack"
       >
@@ -60,13 +60,13 @@ exports[`AMPSettingToggle matches snapshots 2`] = `
   className="amp-setting-toggle"
 >
   <div
-    className="components-base-control components-toggle-control css-1wgfkcs-Wrapper-boxSizingReset-classes ej5x27r4"
+    className="components-base-control components-toggle-control css-ij2po-Wrapper-boxSizingReset ej5x27r4"
   >
     <div
       className="components-base-control__field css-yj91it-StyledField ej5x27r3"
     >
       <div
-        className="components-flex components-h-stack css-1tus1dj-PolymorphicDiv-Flex-base-ItemsRow e19lxcc00"
+        className="components-flex components-h-stack css-x0iqvu-PolymorphicDiv-Flex-base-ItemsRow e19lxcc00"
         data-wp-c16t={true}
         data-wp-component="HStack"
       >
