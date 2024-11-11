@@ -12,18 +12,20 @@ import {
 	deactivatePlugin,
 } from '../../utils/amp-settings-utils';
 
-const postPreviewBtnSelector =
-	'.components-button.editor-header__post-preview-button';
+const ampPreviewMenuItemSelector = `.amp-editor-post-preview`;
 
-// Use ~ since there can be visually hidden elements for the post preview button as direct siblings in latest Gutenberg.
-const ampPreviewBtnSelector = `${postPreviewBtnSelector} ~ .amp-wrapper-post-preview > .amp-editor-post-preview`;
-
-describe('AMP Preview button', () => {
+describe('AMP Preview Menu Item', () => {
 	it('is rendered on a new post', async () => {
 		await createNewPost();
-		await page.waitForSelector(postPreviewBtnSelector);
 
-		await expect(page).toMatchElement(ampPreviewBtnSelector);
+		// Open the Preview dropdown.
+		const [previewMenuDropdownButton] = await page.$x(
+			'//button[contains(@class, "editor-preview-dropdown__toggle")]'
+		);
+
+		await previewMenuDropdownButton.click();
+
+		await expect(page).toMatchElement(ampPreviewMenuItemSelector);
 	});
 
 	it('is rendered when Gutenberg is disabled', async () => {
@@ -31,15 +33,14 @@ describe('AMP Preview button', () => {
 
 		await createNewPost();
 
-		// @TODO: Replace selector value with `postPreviewBtnSelector` once WP 6.6 is released.
-		await page.waitForSelector(
-			'.components-button.edit-post-header__post-preview-button'
+		// Open the Preview dropdown.
+		const [previewMenuDropdownButton] = await page.$x(
+			'//button[contains(@class, "editor-preview-dropdown__toggle")]'
 		);
 
-		// @TODO: Replace selector value with `ampPreviewBtnSelector` once WP 6.6 is released.
-		await expect(page).toMatchElement(
-			'.components-button.edit-post-header__post-preview-button + .amp-wrapper-post-preview > .amp-editor-post-preview'
-		);
+		await previewMenuDropdownButton.click();
+
+		await expect(page).toMatchElement(ampPreviewMenuItemSelector);
 
 		await activatePlugin('gutenberg');
 	});
@@ -50,9 +51,15 @@ describe('AMP Preview button', () => {
 			content:
 				'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur fugiat, impedit.',
 		});
-		await page.waitForSelector(postPreviewBtnSelector);
 
-		await expect(page).toMatchElement(ampPreviewBtnSelector);
+		// Open the Preview dropdown.
+		const [previewMenuDropdownButton] = await page.$x(
+			'//button[contains(@class, "editor-preview-dropdown__toggle")]'
+		);
+
+		await previewMenuDropdownButton.click();
+
+		await expect(page).toMatchElement(ampPreviewMenuItemSelector);
 	});
 
 	it('does not render the button when in Standard mode', async () => {
@@ -68,9 +75,15 @@ describe('AMP Preview button', () => {
 		});
 
 		await createNewPost();
-		await page.waitForSelector(postPreviewBtnSelector);
 
-		await expect(page).not.toMatchElement(ampPreviewBtnSelector);
+		// Open the Preview dropdown.
+		const [previewMenuDropdownButton] = await page.$x(
+			'//button[contains(@class, "editor-preview-dropdown__toggle")]'
+		);
+
+		await previewMenuDropdownButton.click();
+
+		await expect(page).not.toMatchElement(ampPreviewMenuItemSelector);
 
 		await cleanUpSettings();
 	});
