@@ -35,14 +35,14 @@ jobs:
       - name: Checkout including last 2 commits
         # Fetch last 2 commits if it's not a PR, so that we can determine the list of modified files.
         if: ${{ github.base_ref == null }}
-        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 #v4.1.7
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 #v4.2.2
         with:
           fetch-depth: 2
 
       - name: Checkout
         # Do usual checkout if it's a PR.
         if: ${{ github.base_ref != null }}
-        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 #v4.1.7
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 #v4.2.2
 
       - name: Determine modified files
         id: determine-file-counts
@@ -57,7 +57,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 #v4.1.7
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 #v4.2.2
 
       - name: Setup NodeJS and NPM
         uses: ./.github/actions/setup-node-npm
@@ -76,7 +76,7 @@ jobs:
       checks: write
     steps:
       - name: Checkout
-        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 #v4.1.7
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 #v4.2.2
 
       - name: Setup NodeJS and NPM
         uses: ./.github/actions/setup-node-npm
@@ -117,7 +117,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 #v4.1.7
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 #v4.2.2
 
       - name: Setup PHP and Composer
         uses: ./.github/actions/setup-php-composer
@@ -145,7 +145,7 @@ jobs:
     if: needs.pre-run.outputs.changed-php-count > 0 || needs.pre-run.outputs.changed-gha-workflow-count > 0
     steps:
       - name: Checkout
-        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 #v4.1.7
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 #v4.2.2
 
       - name: Setup PHP and Composer
         uses: ./.github/actions/setup-php-composer
@@ -165,13 +165,13 @@ jobs:
     if: needs.pre-run.outputs.changed-js-count > 0 || needs.pre-run.outputs.changed-gha-workflow-count > 0
     steps:
       - name: Checkout
-        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 #v4.1.7
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 #v4.2.2
 
       - name: Setup NodeJS and NPM
         uses: ./.github/actions/setup-node-npm
 
       - name: Setup Jest cache
-        uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 #v4.0.2
+        uses: actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a #v4.1.2
         with:
           path: ~/.jest-cache
           key: ${{ runner.os }}-jest
@@ -181,7 +181,7 @@ jobs:
 
       - name: Upload code coverage report
         if: github.actor != 'dependabot[bot]'
-        uses: codecov/codecov-action@e28ff129e5465c2c0dcc6f003fc735cb6ae0c673 #v4.5.0
+        uses: codecov/codecov-action@b9fd7d16f6d7d1b5d2bec1a2887e65ceed900238 #v4.6.0
         with:
           file: build/logs/lcov.info
           flags: javascript
@@ -207,7 +207,7 @@ jobs:
           totalParts: [2]
     steps:
       - name: Checkout
-        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 #v4.1.7
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 #v4.2.2
 
       - name: Setup NodeJS and NPM
         uses: ./.github/actions/setup-node-npm
@@ -219,7 +219,7 @@ jobs:
         uses: ./.github/actions/plugin-build
 
       - name: Setup Jest cache
-        uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 #v4.0.2
+        uses: actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a #v4.1.2
         with:
           path: ~/.jest-cache
           key: ${{ runner.os }}-jest-e2e-${{ matrix.part }}
@@ -249,7 +249,7 @@ jobs:
           COMPOSE_INTERACTIVE_NO_CLI: true
 
       - name: Archive debug artifacts (screenshots, HTML snapshots)
-        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 #v4.3.3
+        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 #v4.4.3
         if: always()
         with:
           name: e2e-failure-artifacts
@@ -289,6 +289,11 @@ jobs:
         install-pwa-plugin: [true]
         coverage: [false]
         include:
+          - php: '8.4'
+            wp: 'trunk'
+            phpunit: '9.6'
+            experimental: true
+
           - php: '8.3'
             wp: 'trunk'
             phpunit: '9.6'
@@ -370,7 +375,7 @@ jobs:
 
       - name: Checkout
         if: needs.pre-run.outputs.changed-php-count > 0
-        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 #v4.1.7
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 #v4.2.2
 
       - name: Setup PHP and Composer
         if: needs.pre-run.outputs.changed-php-count > 0
@@ -457,7 +462,7 @@ jobs:
 
       - name: Upload code coverage report
         if: ${{ matrix.coverage == true && needs.pre-run.outputs.changed-php-count > 0 && github.actor != 'dependabot[bot]' }}
-        uses: codecov/codecov-action@e28ff129e5465c2c0dcc6f003fc735cb6ae0c673 #v4.5.0
+        uses: codecov/codecov-action@b9fd7d16f6d7d1b5d2bec1a2887e65ceed900238 #v4.6.0
         with:
           file: ${{ env.WP_CORE_DIR }}/src/wp-content/plugins/amp/build/logs/clover.xml
           flags: php,unit
@@ -492,6 +497,10 @@ jobs:
         php: ['7.4']
         wp: ['latest']
         include:
+          - php: '8.4'
+            wp: 'trunk'
+            experimental: true
+
           - php: '8.3'
             wp: 'trunk'
             experimental: true
@@ -534,7 +543,7 @@ jobs:
           fi
 
       - name: Checkout
-        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 #v4.1.7
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 #v4.2.2
 
       - name: Setup PHP and Composer
         uses: ./.github/actions/setup-php-composer
@@ -565,194 +574,194 @@ jobs:
 
 #-----------------------------------------------------------------------------------------------------------------------
 
-  build-zip:
-    name: 'Build: ${{ matrix.build }} build ZIP'
-    needs: pre-run
-    # Only run if the PR was not authored by Dependabot and it is not a draft or not from a fork.
-    if: >
-      needs.pre-run.outputs.changed-file-count > 0 &&
-      github.event.pull_request.draft == false &&
-      github.event.pull_request.head.repo.fork == false &&
-      github.event.pull_request.user.login != 'dependabot[bot]'
-    runs-on: ubuntu-latest
-    permissions:
-      actions: write
-    outputs:
-      branch-name: ${{ steps.retrieve-branch-name.outputs.branch_name }}
-      git-sha-8: ${{ steps.retrieve-git-sha-8.outputs.sha8 }}
-    strategy:
-      matrix:
-        build: ['dev', 'prod']
-    steps:
-      - name: Checkout
-        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 #v4.1.7
-
-      - name: Setup NodeJS and NPM
-        uses: ./.github/actions/setup-node-npm
-
-      - name: Setup PHP and Composer
-        uses: ./.github/actions/setup-php-composer
-        with:
-          php-version: '7.4'
-
-      - name: Create destination directories
-        run: mkdir -p builds/${{ matrix.build }}
-
-      - name: Build plugin
-        run: |
-          npm run package:${{ matrix.build }}
-          mv amp.zip builds/${{ matrix.build }}/amp.zip
-        env:
-          LAST_PR_COMMIT_HASH: ${{ github.event.pull_request.head.sha }}
-
-      - name: Generate checksum file
-        working-directory: builds/${{ matrix.build }}
-        run: |
-          mkdir -p $RUNNER_TEMP/plugin-checksums
-          find . -type f -print0 | sort -z | xargs -r0 shasum -a 256 -b | sed 's# \*\./# *#' > $RUNNER_TEMP/plugin-checksums/checksums.txt
-          shasum -a 256 -U -c $RUNNER_TEMP/plugin-checksums/checksums.txt
-          cat $RUNNER_TEMP/plugin-checksums/checksums.txt | while read sum file; do echo "$sum $file" > ${file#\*}.sha256; done
-
-      - name: Retrieve branch name
-        id: retrieve-branch-name
-        run: echo "branch_name=$(REF=${GITHUB_HEAD_REF:-$GITHUB_REF} && echo ${REF#refs/heads/} | sed 's/\//-/g')" >> $GITHUB_OUTPUT
-
-      - name: Retrieve git SHA-8 string
-        id: retrieve-git-sha-8
-        run: echo "sha8=$(echo ${GITHUB_SHA} | cut -c1-8)" >> $GITHUB_OUTPUT
-
-      - name: Upload build as artifact
-        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 #v4.3.3
-        with:
-          name: amp-${{ steps.retrieve-branch-name.outputs.branch_name }}-${{ steps.retrieve-git-sha-8.outputs.sha8 }}-${{ matrix.build }}
-          path: builds/${{ matrix.build }}
-
-#-----------------------------------------------------------------------------------------------------------------------
-
-  upload-to-gcs:
-    name: Upload plugin ZIPs to Google Cloud Storage
-    runs-on: ubuntu-latest
-    permissions:
-      actions: write
-    needs:
-      - build-zip
-    outputs:
-      dev-checksum: ${{ steps.output-checksums.outputs.dev-checksum }}
-      prod-checksum: ${{ steps.output-checksums.outputs.prod-checksum }}
-    steps:
-      - name: Download dev build
-        uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e #v4.1.7
-        with:
-          name: amp-${{ needs.build-zip.outputs.branch-name }}-${{ needs.build-zip.outputs.git-sha-8 }}-dev
-          path: builds/dev
-
-      - name: Download prod build
-        uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e #v4.1.7
-        with:
-          name: amp-${{ needs.build-zip.outputs.branch-name }}-${{ needs.build-zip.outputs.git-sha-8 }}-prod
-          path: builds/prod
-
-      - name: Setup Google Cloud SDK
-        uses: google-github-actions/setup-gcloud@20c93dacc1d70ddbce76c63ab32c35595345bdd1 #v0
-        with:
-          project_id: ${{ secrets.GCS_PROJECT_ID }}
-          service_account_key: ${{ secrets.GCS_APPLICATION_CREDENTIALS }}
-
-      - name: Output checksums
-        id: output-checksums
-        run: |
-          echo "dev-checksum=$(cat builds/dev/*.sha256)" >> $GITHUB_OUTPUT
-          echo "prod-checksum=$(cat builds/prod/*.sha256)" >> $GITHUB_OUTPUT
-
-      - name: Upload dev build to bucket
-        run: gsutil cp -r builds/dev/amp.zip gs://ampwp_github_artifacts/${{ github.ref }}/dev/amp.zip
-
-      - name: Upload dev build checksums to bucket
-        if: ${{ github.ref == 'refs/heads/develop' }}
-        run: gsutil cp -r builds/dev/*.sha256 gs://ampwp_github_artifacts/${{ github.ref }}/dev/
-
-      - name: Upload prod build to bucket
-        run: gsutil cp -r builds/prod/amp.zip gs://ampwp_github_artifacts/${{ github.ref }}/prod/amp.zip
-
-      - name: Upload prod build checksums to bucket
-        if: ${{ github.ref == 'refs/heads/develop' }}
-        run: gsutil cp -r builds/prod/*.sha256 gs://ampwp_github_artifacts/${{ github.ref }}/prod/
+#  build-zip:
+#    name: 'Build: ${{ matrix.build }} build ZIP'
+#    needs: pre-run
+#    # Only run if the PR was not authored by Dependabot and it is not a draft or not from a fork.
+#    if: >
+#      needs.pre-run.outputs.changed-file-count > 0 &&
+#      github.event.pull_request.draft == false &&
+#      github.event.pull_request.head.repo.fork == false &&
+#      github.event.pull_request.user.login != 'dependabot[bot]'
+#    runs-on: ubuntu-latest
+#    permissions:
+#      actions: write
+#    outputs:
+#      branch-name: ${{ steps.retrieve-branch-name.outputs.branch_name }}
+#      git-sha-8: ${{ steps.retrieve-git-sha-8.outputs.sha8 }}
+#    strategy:
+#      matrix:
+#        build: ['dev', 'prod']
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 #v4.2.2
+#
+#      - name: Setup NodeJS and NPM
+#        uses: ./.github/actions/setup-node-npm
+#
+#      - name: Setup PHP and Composer
+#        uses: ./.github/actions/setup-php-composer
+#        with:
+#          php-version: '7.4'
+#
+#      - name: Create destination directories
+#        run: mkdir -p builds/${{ matrix.build }}
+#
+#      - name: Build plugin
+#        run: |
+#          npm run package:${{ matrix.build }}
+#          mv amp.zip builds/${{ matrix.build }}/amp.zip
+#        env:
+#          LAST_PR_COMMIT_HASH: ${{ github.event.pull_request.head.sha }}
+#
+#      - name: Generate checksum file
+#        working-directory: builds/${{ matrix.build }}
+#        run: |
+#          mkdir -p $RUNNER_TEMP/plugin-checksums
+#          find . -type f -print0 | sort -z | xargs -r0 shasum -a 256 -b | sed 's# \*\./# *#' > $RUNNER_TEMP/plugin-checksums/checksums.txt
+#          shasum -a 256 -U -c $RUNNER_TEMP/plugin-checksums/checksums.txt
+#          cat $RUNNER_TEMP/plugin-checksums/checksums.txt | while read sum file; do echo "$sum $file" > ${file#\*}.sha256; done
+#
+#      - name: Retrieve branch name
+#        id: retrieve-branch-name
+#        run: echo "branch_name=$(REF=${GITHUB_HEAD_REF:-$GITHUB_REF} && echo ${REF#refs/heads/} | sed 's/\//-/g')" >> $GITHUB_OUTPUT
+#
+#      - name: Retrieve git SHA-8 string
+#        id: retrieve-git-sha-8
+#        run: echo "sha8=$(echo ${GITHUB_SHA} | cut -c1-8)" >> $GITHUB_OUTPUT
+#
+#      - name: Upload build as artifact
+#        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 #v4.4.3
+#        with:
+#          name: amp-${{ steps.retrieve-branch-name.outputs.branch_name }}-${{ steps.retrieve-git-sha-8.outputs.sha8 }}-${{ matrix.build }}
+#          path: builds/${{ matrix.build }}
 
 #-----------------------------------------------------------------------------------------------------------------------
 
-  comment-on-pr:
-    name: Comment on PR with links to plugin ZIPs
-    # Only run this job if it's a PR. One way to check for that is if `github.head_ref` is not empty.
-    if: ${{ github.head_ref && github.head_ref != null }}
-    runs-on: ubuntu-latest
-    needs: upload-to-gcs
-    permissions:
-      pull-requests: write
-    steps:
-      - name: Check if a comment was already made
-        id: find-comment
-        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea #v7.0.1
-        with:
-          script: |
-            const { data: comments } = await github.rest.issues.listComments({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number,
-            });
+#  upload-to-gcs:
+#    name: Upload plugin ZIPs to Google Cloud Storage
+#    runs-on: ubuntu-latest
+#    permissions:
+#      actions: write
+#    needs:
+#      - build-zip
+#    outputs:
+#      dev-checksum: ${{ steps.output-checksums.outputs.dev-checksum }}
+#      prod-checksum: ${{ steps.output-checksums.outputs.prod-checksum }}
+#    steps:
+#      - name: Download dev build
+#        uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e #v4.1.7
+#        with:
+#          name: amp-${{ needs.build-zip.outputs.branch-name }}-${{ needs.build-zip.outputs.git-sha-8 }}-dev
+#          path: builds/dev
+#
+#      - name: Download prod build
+#        uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e #v4.1.7
+#        with:
+#          name: amp-${{ needs.build-zip.outputs.branch-name }}-${{ needs.build-zip.outputs.git-sha-8 }}-prod
+#          path: builds/prod
+#
+#      - name: Setup Google Cloud SDK
+#        uses: google-github-actions/setup-gcloud@20c93dacc1d70ddbce76c63ab32c35595345bdd1 #v0
+#        with:
+#          project_id: ${{ secrets.GCS_PROJECT_ID }}
+#          service_account_key: ${{ secrets.GCS_APPLICATION_CREDENTIALS }}
+#
+#      - name: Output checksums
+#        id: output-checksums
+#        run: |
+#          echo "dev-checksum=$(cat builds/dev/*.sha256)" >> $GITHUB_OUTPUT
+#          echo "prod-checksum=$(cat builds/prod/*.sha256)" >> $GITHUB_OUTPUT
+#
+#      - name: Upload dev build to bucket
+#        run: gsutil cp -r builds/dev/amp.zip gs://ampwp_github_artifacts/${{ github.ref }}/dev/amp.zip
+#
+#      - name: Upload dev build checksums to bucket
+#        if: ${{ github.ref == 'refs/heads/develop' }}
+#        run: gsutil cp -r builds/dev/*.sha256 gs://ampwp_github_artifacts/${{ github.ref }}/dev/
+#
+#      - name: Upload prod build to bucket
+#        run: gsutil cp -r builds/prod/amp.zip gs://ampwp_github_artifacts/${{ github.ref }}/prod/amp.zip
+#
+#      - name: Upload prod build checksums to bucket
+#        if: ${{ github.ref == 'refs/heads/develop' }}
+#        run: gsutil cp -r builds/prod/*.sha256 gs://ampwp_github_artifacts/${{ github.ref }}/prod/
 
-            const comment = comments.find((comment) => comment.body.includes('Plugin builds for'));
+#-----------------------------------------------------------------------------------------------------------------------
 
-            return comment ? comment.id : null;
-
-      - name: Get comment body
-        id: get-comment-body
-        # Setting a multi-line output requires escaping line-feeds. See <https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#multiline-strings>.
-        run: |
-          body="Plugin builds for ${{ github.event.pull_request.head.sha }} are ready :bellhop_bell:!
-          - Download [development build](https://storage.googleapis.com/ampwp_github_artifacts/${{ github.ref }}/dev/amp.zip?${{ github.sha }})
-          - Download [production build](https://storage.googleapis.com/ampwp_github_artifacts/${{ github.ref }}/prod/amp.zip?${{ github.sha }})
-
-          <details>
-          <summary>Checksums</summary>
-
-          <pre>
-          <code># Development build checksums
-          ${{ needs.upload-to-gcs.outputs.dev-checksum }}
-
-          # Production build checksums
-          ${{ needs.upload-to-gcs.outputs.prod-checksum }}</code>
-          </pre>
-
-          </details>
-
-          > [!WARNING]
-          > These builds are for testing purposes only and should not be used in production."
-
-          delimiter="${body//$'\n'/'%0A'}"
-          echo "body<<${delimiter}" >> $GITHUB_OUTPUT
-          echo "$body" >> $GITHUB_OUTPUT
-          echo "${delimiter}" >> $GITHUB_OUTPUT
-
-      - name: Create comment on PR with links to plugin builds
-        if: ${{ steps.find-comment.outputs.result == 'null' }}
-        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea #v7.0.1
-        with:
-          script: |
-            github.rest.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number,
-              body: `${{ steps.get-comment-body.outputs.body }}`,
-            });
-
-      - name: Update comment on PR with links to plugin builds
-        if: ${{ steps.find-comment.outputs.result != 'null' }}
-        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea #v7.0.1
-        with:
-          script: |
-            github.rest.issues.updateComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              comment_id: ${{ steps.find-comment.outputs.result }},
-              body: `${{ steps.get-comment-body.outputs.body }}`,
-            });
+#  comment-on-pr:
+#    name: Comment on PR with links to plugin ZIPs
+#    # Only run this job if it's a PR. One way to check for that is if `github.head_ref` is not empty.
+#    if: ${{ github.head_ref && github.head_ref != null }}
+#    runs-on: ubuntu-latest
+#    needs: upload-to-gcs
+#    permissions:
+#      pull-requests: write
+#    steps:
+#      - name: Check if a comment was already made
+#        id: find-comment
+#        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea #v7.0.1
+#        with:
+#          script: |
+#            const { data: comments } = await github.rest.issues.listComments({
+#              owner: context.repo.owner,
+#              repo: context.repo.repo,
+#              issue_number: context.issue.number,
+#            });
+#
+#            const comment = comments.find((comment) => comment.body.includes('Plugin builds for'));
+#
+#            return comment ? comment.id : null;
+#
+#      - name: Get comment body
+#        id: get-comment-body
+#        # Setting a multi-line output requires escaping line-feeds. See <https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#multiline-strings>.
+#        run: |
+#          body="Plugin builds for ${{ github.event.pull_request.head.sha }} are ready :bellhop_bell:!
+#          - Download [development build](https://storage.googleapis.com/ampwp_github_artifacts/${{ github.ref }}/dev/amp.zip?${{ github.sha }})
+#          - Download [production build](https://storage.googleapis.com/ampwp_github_artifacts/${{ github.ref }}/prod/amp.zip?${{ github.sha }})
+#
+#          <details>
+#          <summary>Checksums</summary>
+#
+#          <pre>
+#          <code># Development build checksums
+#          ${{ needs.upload-to-gcs.outputs.dev-checksum }}
+#
+#          # Production build checksums
+#          ${{ needs.upload-to-gcs.outputs.prod-checksum }}</code>
+#          </pre>
+#
+#          </details>
+#
+#          > [!WARNING]
+#          > These builds are for testing purposes only and should not be used in production."
+#
+#          delimiter="${body//$'\n'/'%0A'}"
+#          echo "body<<${delimiter}" >> $GITHUB_OUTPUT
+#          echo "$body" >> $GITHUB_OUTPUT
+#          echo "${delimiter}" >> $GITHUB_OUTPUT
+#
+#      - name: Create comment on PR with links to plugin builds
+#        if: ${{ steps.find-comment.outputs.result == 'null' }}
+#        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea #v7.0.1
+#        with:
+#          script: |
+#            github.rest.issues.createComment({
+#              owner: context.repo.owner,
+#              repo: context.repo.repo,
+#              issue_number: context.issue.number,
+#              body: `${{ steps.get-comment-body.outputs.body }}`,
+#            });
+#
+#      - name: Update comment on PR with links to plugin builds
+#        if: ${{ steps.find-comment.outputs.result != 'null' }}
+#        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea #v7.0.1
+#        with:
+#          script: |
+#            github.rest.issues.updateComment({
+#              owner: context.repo.owner,
+#              repo: context.repo.repo,
+#              comment_id: ${{ steps.find-comment.outputs.result }},
+#              body: `${{ steps.get-comment-body.outputs.body }}`,
+#            });
