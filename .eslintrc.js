@@ -78,7 +78,6 @@ module.exports = {
 					'amp-settings',
 					'amp-themes',
 					'amp-plugins',
-					'amp-support',
 					'amp-block-validation',
 					'amp-site-scan-notice',
 				],
