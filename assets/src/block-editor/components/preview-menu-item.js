@@ -6,7 +6,8 @@ import PropTypes from 'prop-types';
 /**
  * WordPress dependencies
  */
-import { Button, Icon, VisuallyHidden } from '@wordpress/components';
+import { PluginPreviewMenuItem } from '@wordpress/editor';
+import { Icon, VisuallyHidden } from '@wordpress/components';
 import { compose } from '@wordpress/compose';
 import { withDispatch, withSelect } from '@wordpress/data';
 import { Component, createRef, renderToString } from '@wordpress/element';
@@ -16,7 +17,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { isAMPEnabled } from '../helpers';
-import { AMPFilledIcon, AMPBlackIcon } from '../../icons';
+import { AMPBlackIcon } from '../../icons';
 
 /**
  * Writes the message and graphic in the new preview window that was opened.
@@ -95,11 +96,10 @@ function writeInterstitialMessage(targetDocument) {
 }
 
 /**
- * A 'Preview AMP' button, forked from the Core 'Preview' button: <PostPreviewButton>.
+ * A 'Preview AMP' Menu Item.
  *
- * @see https://github.com/WordPress/gutenberg/blob/95e769df1f82f6b0ef587d81af65dd2f48cd1c38/packages/editor/src/components/post-preview-button/index.js#L95-L200
  */
-class AmpPreviewButton extends Component {
+class AmpPreviewMenuItem extends Component {
 	/**
 	 * Constructs the class.
 	 *
@@ -108,7 +108,7 @@ class AmpPreviewButton extends Component {
 	constructor(...args) {
 		super(...args);
 
-		this.buttonRef = createRef();
+		this.itemRef = createRef();
 		this.openPreviewWindow = this.openPreviewWindow.bind(this);
 	}
 
@@ -139,8 +139,8 @@ class AmpPreviewButton extends Component {
 
 		if (previewWindow && !previewWindow.closed) {
 			previewWindow.location = url;
-			if (this.buttonRef.current) {
-				this.buttonRef.current.focus();
+			if (this.itemRef.current) {
+				this.itemRef.current.focus();
 			}
 		}
 	}
@@ -159,7 +159,7 @@ class AmpPreviewButton extends Component {
 	 * @param {Event} event The DOM event.
 	 */
 	openPreviewWindow(event) {
-		// Our Preview button has its 'href' and 'target' set correctly for a11y
+		// Our Preview Menu Item has its 'href' and 'target' set correctly for a11y
 		// purposes. Unfortunately, though, we can't rely on the default 'click'
 		// handler since sometimes it incorrectly opens a new tab instead of reusing
 		// the existing one.
@@ -208,7 +208,6 @@ class AmpPreviewButton extends Component {
 			currentPostLink,
 			errorMessages,
 			isEnabled,
-			isSaveable,
 			isStandardMode,
 		} = this.props;
 
@@ -217,33 +216,37 @@ class AmpPreviewButton extends Component {
 		// just link to the post's URL.
 		const href = previewLink || currentPostLink;
 
+		if (typeof PluginPreviewMenuItem !== 'function') {
+			return null;
+		}
+
 		return (
 			isEnabled &&
 			!errorMessages.length &&
 			!isStandardMode && (
-				<Button
+				<PluginPreviewMenuItem
 					className="amp-editor-post-preview"
-					href={href}
 					title={__('Preview AMP', 'amp')}
-					isSecondary
-					disabled={!isSaveable}
 					onClick={this.openPreviewWindow}
-					ref={this.buttonRef}
+					href={href}
 				>
-					<AMPFilledIcon viewBox="0 0 62 62" height={18} width={18} />
+					{
+						/* translators: Button label for the AMP preview button */
+						__('Preview AMP', 'amp')
+					}
 					<VisuallyHidden as="span">
 						{
 							/* translators: accessibility text */
 							__('(opens in a new tab)', 'amp')
 						}
 					</VisuallyHidden>
-				</Button>
+				</PluginPreviewMenuItem>
 			)
 		);
 	}
 }
 
-AmpPreviewButton.propTypes = {
+AmpPreviewMenuItem.propTypes = {
 	autosave: PropTypes.func.isRequired,
 	currentPostLink: PropTypes.string.isRequired,
 	postId: PropTypes.number.isRequired,
@@ -251,7 +254,6 @@ AmpPreviewButton.propTypes = {
 	isAutosaveable: PropTypes.bool.isRequired,
 	isDraft: PropTypes.bool.isRequired,
 	isEnabled: PropTypes.bool.isRequired,
-	isSaveable: PropTypes.bool.isRequired,
 	savePost: PropTypes.func.isRequired,
 	errorMessages: PropTypes.array,
 	isStandardMode: PropTypes.bool,
@@ -308,4 +310,4 @@ export default compose([
 		autosave: dispatch('core/editor').autosave,
 		savePost: dispatch('core/editor').savePost,
 	})),
-])(AmpPreviewButton);
+])(AmpPreviewMenuItem);
