@@ -5,13 +5,13 @@ exports[`RedirectToggle matches snapshot 1`] = `
   className="amp-setting-toggle"
 >
   <div
-    className="components-base-control components-toggle-control css-ij2po-Wrapper-boxSizingReset ej5x27r4"
+    className="components-base-control components-toggle-control css-fothu4-Wrapper-boxSizingReset ej5x27r4"
   >
     <div
-      className="components-base-control__field css-yj91it-StyledField ej5x27r3"
+      className="components-base-control__field css-2txpkp-StyledField ej5x27r3"
     >
       <div
-        className="components-flex components-h-stack css-x0iqvu-PolymorphicDiv-Flex-base-ItemsRow e19lxcc00"
+        className="components-flex components-h-stack css-1ub13jk-PolymorphicDiv-Flex-base-ItemsRow e19lxcc00"
         data-wp-c16t={true}
         data-wp-component="HStack"
       >
@@ -33,7 +33,7 @@ exports[`RedirectToggle matches snapshot 1`] = `
           />
         </span>
         <label
-          className="components-flex-item components-flex-block components-toggle-control__label css-10m3u8l-PolymorphicDiv-Item-sx-Base-block e19lxcc00"
+          className="components-flex-item components-flex-block components-toggle-control__label css-1mqm1jz-PolymorphicDiv-Item-sx-Base-block e19lxcc00"
           data-wp-c16t={true}
           data-wp-component="FlexBlock"
           htmlFor="inspector-toggle-control-0"
