@@ -130,7 +130,7 @@
     "package:prod": "cross-env NODE_ENV=production npm-run-all build:prod 'package:!(dev|prod)'",
     "package:run": "grunt build",
     "package:zip": "grunt create-build-zip",
-    "prepare": "husky install",
+    "prepare": "husky",
     "start": "wp-scripts start",
     "test": "npm-run-all --parallel test:*",
     "test:e2e": "cross-env JEST_PUPPETEER_CONFIG=./tests/e2e/puppeteer.config.js wp-scripts test-e2e --config=tests/e2e/jest.config.js",
