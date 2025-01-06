@@ -335,11 +335,11 @@ jobs:
             external-http: true
 
           - php: '7.4'
-            wp: '6.5'
+            wp: '6.6'
             phpunit: '7'
 
           - php: '7.4'
-            wp: '6.5'
+            wp: '6.6'
             phpunit: '7'
             external-http: true
     steps:
@@ -521,7 +521,7 @@ jobs:
             wp: 'latest'
 
           - php: '7.4'
-            wp: '6.5'
+            wp: '6.6'
     steps:
       - name: Shutdown default MySQL service
         if: needs.pre-run.outputs.changed-php-count > 0
