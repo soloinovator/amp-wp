@@ -1901,7 +1901,7 @@ class Test_AMP_Validation_Manager extends DependencyInjectedTestCase {
 			],
 		];
 
-		if ( function_exists( 'apply_block_hooks_to_content' ) ) {
+		if ( function_exists( 'apply_block_hooks_to_content' ) && has_filter( 'the_content', 'apply_block_hooks_to_content' ) ) {
 			array_unshift(
 				$sources,
 				[
