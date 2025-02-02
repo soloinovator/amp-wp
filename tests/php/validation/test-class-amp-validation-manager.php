@@ -1849,57 +1849,72 @@ class Test_AMP_Validation_Manager extends DependencyInjectedTestCase {
 				'name'     => 'wp-includes',
 				'function' => 'WP_Embed::autoembed',
 			],
-			[
-				'type'     => 'core',
-				'name'     => 'wp-includes',
-				'function' => 'do_blocks',
-			],
-			[
-				'type'     => 'core',
-				'name'     => 'wp-includes',
-				'function' => 'wptexturize',
-			],
-			[
-				'type'     => 'core',
-				'name'     => 'wp-includes',
-				'function' => 'wpautop',
-			],
-			[
-				'type'     => 'core',
-				'name'     => 'wp-includes',
-				'function' => 'shortcode_unautop',
-			],
-			[
-				'type'     => 'core',
-				'name'     => 'wp-includes',
-				'function' => 'prepend_attachment',
-			],
-			[
-				'type'     => 'core',
-				'name'     => 'wp-includes',
-				'function' => 'wp_replace_insecure_home_url',
-			],
-			[
-				'type'     => 'core',
-				'name'     => 'wp-includes',
-				'function' => 'capital_P_dangit',
-			],
-			[
-				'type'     => 'core',
-				'name'     => 'wp-includes',
-				'function' => 'do_shortcode',
-			],
-			[
-				'type'     => 'core',
-				'name'     => 'wp-includes',
-				'function' => 'wp_filter_content_tags',
-			],
-			[
-				'type'     => 'core',
-				'name'     => 'wp-includes',
-				'function' => 'convert_smilies',
-			],
 		];
+
+		if ( function_exists( 'gutenberg_apply_block_hooks_to_post_content' ) && has_filter( 'the_content', 'gutenberg_apply_block_hooks_to_post_content' ) ) {
+			$sources[] = [
+				'type'     => 'plugin',
+				'name'     => 'gutenberg',
+				'file'     => 'lib/compat/wordpress-6.8/blocks.php',
+				'function' => 'gutenberg_apply_block_hooks_to_post_content',
+			];
+		}
+
+		$sources = array_merge(
+			$sources,
+			[
+				[
+					'type'     => 'core',
+					'name'     => 'wp-includes',
+					'function' => 'do_blocks',
+				],
+				[
+					'type'     => 'core',
+					'name'     => 'wp-includes',
+					'function' => 'wptexturize',
+				],
+				[
+					'type'     => 'core',
+					'name'     => 'wp-includes',
+					'function' => 'wpautop',
+				],
+				[
+					'type'     => 'core',
+					'name'     => 'wp-includes',
+					'function' => 'shortcode_unautop',
+				],
+				[
+					'type'     => 'core',
+					'name'     => 'wp-includes',
+					'function' => 'prepend_attachment',
+				],
+				[
+					'type'     => 'core',
+					'name'     => 'wp-includes',
+					'function' => 'wp_replace_insecure_home_url',
+				],
+				[
+					'type'     => 'core',
+					'name'     => 'wp-includes',
+					'function' => 'capital_P_dangit',
+				],
+				[
+					'type'     => 'core',
+					'name'     => 'wp-includes',
+					'function' => 'do_shortcode',
+				],
+				[
+					'type'     => 'core',
+					'name'     => 'wp-includes',
+					'function' => 'wp_filter_content_tags',
+				],
+				[
+					'type'     => 'core',
+					'name'     => 'wp-includes',
+					'function' => 'convert_smilies',
+				],
+			]
+		);
 
 		if ( function_exists( 'apply_block_hooks_to_content' ) && has_filter( 'the_content', 'apply_block_hooks_to_content' ) ) {
 			array_unshift(
