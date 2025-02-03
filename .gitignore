@@ -10,7 +10,6 @@ node_modules
 !/assets/css/src/
 /assets/js/**/*.js
 /assets/js/*.asset.php
-!/assets/js/amp-service-worker-runtime-precaching.js
 /assets/js/*.map
 /built
 /amphtml

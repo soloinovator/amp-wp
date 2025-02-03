@@ -1838,18 +1838,31 @@ class Test_AMP_Validation_Manager extends DependencyInjectedTestCase {
 
 		$filtered_content = apply_filters( 'the_content', 'before[test]after' );
 
-		if ( has_filter( 'the_content', 'do_blocks' ) ) {
-			$sources = [
-				[
-					'type'     => 'core',
-					'name'     => 'wp-includes',
-					'function' => 'WP_Embed::run_shortcode',
-				],
-				[
-					'type'     => 'core',
-					'name'     => 'wp-includes',
-					'function' => 'WP_Embed::autoembed',
-				],
+		$sources = [
+			[
+				'type'     => 'core',
+				'name'     => 'wp-includes',
+				'function' => 'WP_Embed::run_shortcode',
+			],
+			[
+				'type'     => 'core',
+				'name'     => 'wp-includes',
+				'function' => 'WP_Embed::autoembed',
+			],
+		];
+
+		if ( function_exists( 'gutenberg_apply_block_hooks_to_post_content' ) && has_filter( 'the_content', 'gutenberg_apply_block_hooks_to_post_content' ) ) {
+			$sources[] = [
+				'type'     => 'plugin',
+				'name'     => 'gutenberg',
+				'file'     => 'lib/compat/wordpress-6.8/blocks.php',
+				'function' => 'gutenberg_apply_block_hooks_to_post_content',
+			];
+		}
+
+		$sources = array_merge(
+			$sources,
+			[
 				[
 					'type'     => 'core',
 					'name'     => 'wp-includes',
@@ -1875,71 +1888,11 @@ class Test_AMP_Validation_Manager extends DependencyInjectedTestCase {
 					'name'     => 'wp-includes',
 					'function' => 'prepend_attachment',
 				],
-			];
-		} else {
-			$sources = [
 				[
 					'type'     => 'core',
 					'name'     => 'wp-includes',
-					'function' => 'WP_Embed::run_shortcode',
+					'function' => 'wp_replace_insecure_home_url',
 				],
-				[
-					'type'     => 'core',
-					'name'     => 'wp-includes',
-					'function' => 'WP_Embed::autoembed',
-				],
-				[
-					'type'     => 'core',
-					'name'     => 'wp-includes',
-					'function' => 'wptexturize',
-				],
-				[
-					'type'     => 'core',
-					'name'     => 'wp-includes',
-					'function' => 'wpautop',
-				],
-				[
-					'type'     => 'core',
-					'name'     => 'wp-includes',
-					'function' => 'shortcode_unautop',
-				],
-				[
-					'type'     => 'core',
-					'name'     => 'wp-includes',
-					'function' => 'prepend_attachment',
-				],
-			];
-		}
-
-		// This will be called after `do_shortcode` in WP 6.4 and later.
-		// @see <https://core.trac.wordpress.org/ticket/58853>.
-		if ( version_compare( strtok( get_bloginfo( 'version' ), '-' ), '6.4', '<' ) ) {
-			$sources[] = [
-				'type'     => 'core',
-				'name'     => 'wp-includes',
-				'function' => 'wp_filter_content_tags',
-			];
-		}
-
-		if ( function_exists( 'wp_replace_insecure_home_url' ) ) {
-			$sources[] = [
-				'type'     => 'core',
-				'name'     => 'wp-includes',
-				'function' => 'wp_replace_insecure_home_url',
-			];
-		}
-
-		if ( function_exists( 'gutenberg_trim_footnotes' ) ) {
-			$sources[] = [
-				'type'     => 'plugin',
-				'name'     => 'gutenberg',
-				'function' => 'gutenberg_trim_footnotes',
-			];
-		}
-
-		$sources = array_merge(
-			$sources,
-			[
 				[
 					'type'     => 'core',
 					'name'     => 'wp-includes',
@@ -1950,25 +1903,29 @@ class Test_AMP_Validation_Manager extends DependencyInjectedTestCase {
 					'name'     => 'wp-includes',
 					'function' => 'do_shortcode',
 				],
+				[
+					'type'     => 'core',
+					'name'     => 'wp-includes',
+					'function' => 'wp_filter_content_tags',
+				],
+				[
+					'type'     => 'core',
+					'name'     => 'wp-includes',
+					'function' => 'convert_smilies',
+				],
 			]
 		);
 
-		// `wp_filter_content_tags` is called after `do_shortcode` in WP 6.4 and later.
-		// @see <https://core.trac.wordpress.org/ticket/58853>.
-		if ( version_compare( get_bloginfo( 'version' ), '6.4-alpha', '>=' ) ) {
-			$sources[] = [
-				'type'     => 'core',
-				'name'     => 'wp-includes',
-				'function' => 'wp_filter_content_tags',
-			];
+		if ( function_exists( 'apply_block_hooks_to_content' ) && has_filter( 'the_content', 'apply_block_hooks_to_content' ) ) {
+			array_unshift(
+				$sources,
+				[
+					'type'     => 'core',
+					'name'     => 'wp-includes',
+					'function' => 'apply_block_hooks_to_content',
+				]
+			);
 		}
-
-		// `wp_filter_content_tags` is called before `convert_smilies` in WP 6.4 and later.
-		$sources[] = [
-			'type'     => 'core',
-			'name'     => 'wp-includes',
-			'function' => 'convert_smilies',
-		];
 
 		foreach ( $sources as &$source ) {
 			$function = $source['function'];

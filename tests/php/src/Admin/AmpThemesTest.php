@@ -83,7 +83,7 @@ class AmpThemesTest extends TestCase {
 		$this->assertFalse( AmpThemes::is_needed() );
 
 		// Test 3: Admin request.
-		$wp_version = '6.5';
+		$wp_version = '6.6';
 		set_current_screen( 'index.php' );
 		$this->assertTrue( is_admin() );
 		$this->assertTrue( AmpThemes::is_needed() );
