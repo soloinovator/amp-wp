@@ -25,11 +25,11 @@
   "dependencies": {
     "@wordpress/api-fetch": "7.2.0",
     "@wordpress/autop": "4.2.0",
-    "@wordpress/components": "28.2.0",
+    "@wordpress/components": "28.4.0",
     "@wordpress/compose": "7.2.0",
     "@wordpress/date": "5.2.0",
     "@wordpress/dom-ready": "4.2.0",
-    "@wordpress/editor": "14.2.0",
+    "@wordpress/editor": "14.15.0",
     "@wordpress/element": "6.2.0",
     "@wordpress/escape-html": "3.2.0",
     "@wordpress/html-entities": "4.2.0",
